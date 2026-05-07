@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Project</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Team Task Manager
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="/create-task">Tasks</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTAINER -->
+
+    <div class="container">
+
+        <div class="auth-container">
+
+            <h2>Create New Project</h2>
+
+            <form method="POST">
+
+                <!-- PROJECT NAME -->
+
+                <label>
+                    Project Name
+                </label>
+
+                <input type="text"
+                       name="name"
+                       placeholder="Enter Project Name"
+                       required>
+
+
+                <!-- PROJECT DESCRIPTION -->
+
+                <label>
+                    Project Description
+                </label>
+
+                <textarea name="description"
+                          placeholder="Enter Project Description"
+                          rows="5"
+                          required>
+                </textarea>
+
+
+                <!-- PROJECT START DATE -->
+
+                <label>
+                    Project Start Date
+                </label>
+
+                <input type="date"
+                       name="start_date"
+                       required>
+
+
+                <!-- PROJECT END DATE -->
+
+                <label>
+                    Project End Date
+                </label>
+
+                <input type="date"
+                       name="end_date"
+                       required>
+
+
+                <!-- PROJECT PRIORITY -->
+
+                <label>
+                    Project Priority
+                </label>
+
+                <select name="priority"
+                        required>
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                </select>
+
+
+                <!-- ASSIGN TEAM MEMBERS -->
+
+                <label>
+                    Assign Team Members
+                </label>
+
+                <select name="members"
+                        multiple
+                        required>
+
+                    {% for user in users %}
+
+                        {% if user.role == "Member" %}
+
+                        <option value="{{ user.id }}">
+
+                            {{ user.username }}
+
+                        </option>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </select>
+
+                <p>
+                    Hold CTRL key to select multiple members
+                </p>
+
+
+                <!-- PROJECT STATUS -->
+
+                <label>
+                    Project Status
+                </label>
+
+                <select name="status">
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                </select>
+
+
+                <br><br>
+
+                <!-- SUBMIT BUTTON -->
+
+                <button type="submit">
+
+                    Create Project
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

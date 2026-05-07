@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Login</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="auth-page">
+
+<div class="auth-container">
+
+<h2>Welcome Back</h2>
+
+<p>Login to continue managing tasks and projects</p>
+
+<form method="POST">
+
+<label>Email</label>
+
+<input type="email"
+name="email"
+placeholder="Enter Email"
+required>
+
+<label>Password</label>
+
+<input type="password"
+name="password"
+placeholder="Enter Password"
+required>
+
+<button type="submit">
+
+Login
+
+</button>
+
+</form>
+
+<div class="center-link">
+
+<a href="/signup">
+
+Create New Account
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

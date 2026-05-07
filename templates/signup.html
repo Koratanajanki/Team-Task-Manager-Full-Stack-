@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Signup</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="auth-page">
+
+<div class="auth-container">
+
+<h2>Create Account</h2>
+
+<p>Signup to access Team Task Manager</p>
+
+<form method="POST">
+
+<label>Username</label>
+
+<input type="text"
+name="username"
+placeholder="Enter Username"
+required>
+
+<label>Email</label>
+
+<input type="email"
+name="email"
+placeholder="Enter Email"
+required>
+
+<label>Password</label>
+
+<input type="password"
+name="password"
+placeholder="Enter Password"
+required>
+
+<label>Select Role</label>
+
+<select name="role">
+
+    <option value="Member">
+
+        Member
+
+    </option>
+
+    {% if admin_count < 5 %}
+
+    <option value="Admin">
+
+        Admin
+
+    </option>
+
+    {% endif %}
+
+</select>
+<button type="submit">
+
+Signup
+
+</button>
+
+</form>
+
+<div class="center-link">
+
+<a href="/login">
+
+Already have an account?
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

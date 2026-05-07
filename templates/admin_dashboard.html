@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Team Task Manager
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#tasks">Tasks</a>
+
+            <a href="#projects">Projects</a>
+
+            <a href="#assignments">Assignments</a>
+
+            <a href="#members">Members</a>
+
+            <a href="#status">Status</a>
+
+            <a href="#profile">Profile</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTAINER -->
+
+    <div class="container">
+
+        <!-- WELCOME -->
+
+        <div class="section">
+
+            <h1>
+                Welcome Admin 👑
+            </h1>
+
+            <p>
+                Manage projects, tasks, assignments,
+                organization members and monitor progress.
+            </p>
+
+        </div>
+
+
+        <!-- DASHBOARD CARDS -->
+
+        <div class="dashboard-cards">
+
+            <div class="card">
+
+                <h2>Total Tasks</h2>
+
+                <p>{{ total }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Completed Tasks</h2>
+
+                <p>{{ completed }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Pending Tasks</h2>
+
+                <p>{{ pending }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>In Progress</h2>
+
+                <p>{{ in_progress }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Total Projects</h2>
+
+                <p>{{ projects|length }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Organization Members</h2>
+
+                <p>{{ members|length }}</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="section">
+
+            <h2>Quick Actions</h2>
+
+            <a href="/create-project">
+
+                <button>
+                    Create Project
+                </button>
+
+            </a>
+
+
+            <a href="/create-task">
+
+                <button>
+                    Create Task
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- TASKS SECTION -->
+
+        <div class="section" id="tasks">
+
+            <h2>Tasks List</h2>
+
+            {% if tasks %}
+
+                {% for task in tasks %}
+
+                <div class="item">
+
+                    <h3>{{ task.title }}</h3>
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ task.description }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ task.status }}
+                    </p>
+
+                    <p>
+                        <strong>Deadline:</strong>
+                        {{ task.deadline }}
+                    </p>
+
+                    <p>
+                        <strong>Assigned User ID:</strong>
+                        {{ task.assigned_to }}
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No Tasks Available</p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- PROJECTS SECTION -->
+
+        <div class="section" id="projects">
+
+            <h2>Projects List</h2>
+
+            {% if projects %}
+
+                {% for project in projects %}
+
+                <div class="item">
+
+                    <h3>{{ project.name }}</h3>
+
+                    <p>
+                        {{ project.description }}
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No Projects Available</p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- MEMBERS SECTION -->
+
+        <div class="section" id="members">
+
+            <h2>Organization Members</h2>
+
+            {% if members %}
+
+                {% for member in members %}
+
+                <div class="item">
+
+                    <h3>{{ member.username }}</h3>
+
+                    <p>
+                        <strong>Email:</strong>
+                        {{ member.email }}
+                    </p>
+
+                    <p>
+                        <strong>Role:</strong>
+                        {{ member.role }}
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No Members Found</p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- STATUS SECTION -->
+
+        <div class="section" id="status">
+
+            <h2>Project Status Overview</h2>
+
+            <div class="item">
+
+                <p>
+                    ✅ Completed Tasks:
+                    <strong>{{ completed }}</strong>
+                </p>
+
+                <p>
+                    ⏳ Pending Tasks:
+                    <strong>{{ pending }}</strong>
+                </p>
+
+                <p>
+                    🚀 In Progress:
+                    <strong>{{ in_progress }}</strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE SECTION -->
+
+        <div class="section" id="profile">
+
+            <h2>Admin Profile</h2>
+
+            <div class="item">
+
+                <p>
+                    <strong>Role:</strong>
+                    Admin
+                </p>
+
+                <p>
+                    <strong>Access:</strong>
+                    Full System Control
+                </p>
+
+                <p>
+                    <strong>Permissions:</strong>
+                    Create Projects, Create Tasks,
+                    Assign Members, Monitor Progress
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Member Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Team Task Manager
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#projects">Projects</a>
+
+            <a href="#tasks">Tasks</a>
+
+            <a href="#assignments">Assignments</a>
+
+            <a href="#status">Status</a>
+
+            <a href="#profile">Profile</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTAINER -->
+
+    <div class="container">
+
+        <!-- WELCOME -->
+
+        <div class="section">
+
+            <h1>
+                Welcome {{ session['username'] }} 👋
+            </h1>
+
+            <p>
+                Manage your assigned tasks and monitor project progress.
+            </p>
+
+        </div>
+
+
+        <!-- DASHBOARD CARDS -->
+
+        <div class="dashboard-cards">
+
+            <div class="card">
+
+                <h2>Total Tasks</h2>
+
+                <p>{{ total }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Completed Tasks</h2>
+
+                <p>{{ completed }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Pending Tasks</h2>
+
+                <p>{{ pending }}</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>In Progress</h2>
+
+                <p>{{ in_progress }}</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TASKS SECTION -->
+
+        <div class="section" id="tasks">
+
+            <h2>Assigned Tasks</h2>
+
+            {% if tasks %}
+
+                {% for task in tasks %}
+
+                <div class="item">
+
+                    <h3>{{ task.title }}</h3>
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ task.description }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ task.status }}
+                    </p>
+
+                    <p>
+                        <strong>Deadline:</strong>
+                        {{ task.deadline }}
+                    </p>
+
+                    <!-- UPDATE STATUS -->
+
+                    <form method="POST"
+                          action="/update-task/{{ task.id }}">
+
+                        <select name="status">
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                        </select>
+
+                        <button type="submit">
+
+                            Update Status
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No Tasks Assigned</p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- PROJECTS SECTION -->
+
+        <div class="section" id="projects">
+
+            <h2>Assigned Projects</h2>
+
+            {% if projects %}
+
+                {% for project in projects %}
+
+                <div class="item">
+
+                    <h3>{{ project.name }}</h3>
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ project.description }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ project.status }}
+                    </p>
+
+                    <p>
+                        <strong>Priority:</strong>
+                        {{ project.priority }}
+                    </p>
+
+                    <p>
+                        <strong>End Date:</strong>
+                        {{ project.end_date }}
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No Projects Available</p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ASSIGNMENTS SECTION -->
+
+        <div class="section" id="assignments">
+
+            <h2>Assignments Overview</h2>
+
+            {% if tasks %}
+
+                {% for task in tasks %}
+
+                <div class="item">
+
+                    <h3>{{ task.title }}</h3>
+
+                    <p>
+                        Status:
+                        <strong>{{ task.status }}</strong>
+                    </p>
+
+                    <p>
+                        Deadline:
+                        <strong>{{ task.deadline }}</strong>
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No Assignments Available</p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- STATUS SECTION -->
+
+        <div class="section" id="status">
+
+            <h2>Task & Project Status</h2>
+
+            <!-- TASK STATUS -->
+
+            <div class="item">
+
+                <h3>Task Status Summary</h3>
+
+                <p>
+                    ✅ Completed Tasks:
+                    <strong>{{ completed }}</strong>
+                </p>
+
+                <p>
+                    ⏳ Pending Tasks:
+                    <strong>{{ pending }}</strong>
+                </p>
+
+                <p>
+                    🚀 In Progress Tasks:
+                    <strong>{{ in_progress }}</strong>
+                </p>
+
+            </div>
+
+
+            <!-- PROJECT STATUS -->
+
+            <div class="item">
+
+                <h3>Project Status Summary</h3>
+
+                {% if projects %}
+
+                    {% for project in projects %}
+
+                    <p>
+
+                        <strong>{{ project.name }}</strong>
+                        -
+                        {{ project.status }}
+
+                    </p>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>No Project Status Available</p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE SECTION -->
+
+        <div class="section" id="profile">
+
+            <h2>My Profile</h2>
+
+            <div class="item">
+
+                <p>
+                    <strong>Username:</strong>
+                    {{ session['username'] }}
+                </p>
+
+                <p>
+                    <strong>Role:</strong>
+                    Member
+                </p>
+
+                <p>
+                    <strong>Access:</strong>
+                    Assigned Tasks & Projects
+                </p>
+
+                <p>
+                    <strong>Permissions:</strong>
+                    Update task status and monitor progress
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
